@@ -13,3 +13,15 @@ def get_dominant_eigenvalue_and_eigenvector(data, num_steps):
     # Initialize a random vector of the same size as the matrix
     n = data.shape[0]
     eigenvector = np.random.rand(n)
+
+    for _ in range(num_steps):
+        # Perform matrix-vector multiplication A * eigenvector
+        matrix_vector_product = np.dot(data, eigenvector)
+
+        # Calculate the dominant eigenvalue estimate
+        eigenvalue = float(np.linalg.norm(matrix_vector_product)) 
+
+        # Normalize the eigenvector
+        eigenvector = matrix_vector_product / eigenvalue
+
+    return eigenvalue, eigenvector
