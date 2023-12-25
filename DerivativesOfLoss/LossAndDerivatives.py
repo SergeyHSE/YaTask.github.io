@@ -106,3 +106,13 @@ class LossAndDerivatives:
         else:
             return (1 / n_observations) * X.T.dot(np.sign(error))
 
+    @staticmethod
+    def l2_reg_derivative(w, lambda_reg=1.0):
+        """
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
+
+        Return : numpy array of same shape as `w`
+
+        Computes the L2 regularization term derivative w.r.t. the weight matrix w.
+        """
+        return 2 * lambda_reg * w
