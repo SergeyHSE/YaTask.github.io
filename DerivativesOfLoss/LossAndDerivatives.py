@@ -36,3 +36,15 @@ class LossAndDerivatives:
         else:
             return np.mean(np.abs(error))
 
+    @staticmethod
+    def l2_reg(w):
+        """
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
+
+        Return: float
+            single number with sum of squared elements of the weight matrix ( \sum_{ij} w_{ij}^2 )
+
+        Computes the L2 regularization term for the weight matrix w.
+        """
+        return np.sum(w ** 2)
+
