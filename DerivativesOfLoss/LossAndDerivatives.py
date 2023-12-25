@@ -48,3 +48,15 @@ class LossAndDerivatives:
         """
         return np.sum(w ** 2)
 
+    @staticmethod
+    def l1_reg(w):
+        """
+        w : numpy array of shape (`n_features`, `target_dimentionality`)
+
+        Return : float
+            single number with sum of the absolute values of the weight matrix ( \sum_{ij} |w_{ij}| )
+
+        Computes the L1 regularization term for the weight matrix w.
+        """
+        return np.sum(np.abs(w))
+
