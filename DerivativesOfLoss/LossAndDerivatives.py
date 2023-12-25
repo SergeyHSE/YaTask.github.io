@@ -131,3 +131,10 @@ class LossAndDerivatives:
         derivatives[w > 0] = 1
         derivatives[w < 0] = -1
         return lambda_reg * derivatives
+
+    @staticmethod
+    def no_reg_derivative(w):
+        """
+        Simply ignores the derivative
+        """
+        return np.zeros_like(w)
