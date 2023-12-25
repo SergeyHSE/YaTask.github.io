@@ -116,3 +116,18 @@ class LossAndDerivatives:
         Computes the L2 regularization term derivative w.r.t. the weight matrix w.
         """
         return 2 * lambda_reg * w
+
+    @staticmethod
+    def l1_reg_derivative(w, lambda_reg=1.0):
+        """
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
+
+        Return : numpy array of same shape as `w`
+
+        Computes the L1 regularization term derivative w.r.t. the weight matrix w.
+        """
+        derivatives = np.zeros_like(w)
+        derivatives[w > 0] = 1
+        derivatives[w < 0] = -1
+        return lambda_reg * derivatives
