@@ -78,7 +78,6 @@ class LossAndDerivatives:
         n_observations = X.shape[0]
         error = X.dot(w) - Y
         if len(error.shape) > 1:
-          # Если `target_dimentionality` > 1, усредняем ошибку по этой размерности.
             return (2 / n_observations) * X.T.dot(error) / error.shape[1]
         else:
             return (2 / n_observations) * X.T.dot(error)
@@ -101,7 +100,6 @@ class LossAndDerivatives:
         n_observations = X.shape[0]
         error = X.dot(w) - Y
         if len(error.shape) > 1:
-            # Если `target_dimentionality` > 1, усредняем ошибку по этой размерности.
             return (1 / n_observations) * X.T.dot(np.sign(error)) / error.shape[1]
         else:
             return (1 / n_observations) * X.T.dot(np.sign(error))
