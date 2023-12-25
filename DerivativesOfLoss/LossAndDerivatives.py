@@ -82,3 +82,27 @@ class LossAndDerivatives:
             return (2 / n_observations) * X.T.dot(error) / error.shape[1]
         else:
             return (2 / n_observations) * X.T.dot(error)
+
+    @staticmethod
+    def mae_derivative(X, Y, w):
+        """
+        X : numpy array of shape (`n_observations`, `n_features`)
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
+
+        Return : numpy array of same shape as `w`
+
+        Computes the MAE derivative for linear regression (X.dot(w)) with no bias term
+        w.r.t. w weight matrix.
+
+        Please mention, that in case `target_dimentionality` > 1 the error is averaged along this
+        dimension as well, so you need to consider that fact in derivative implementation.
+        """
+        n_observations = X.shape[0]
+        error = X.dot(w) - Y
+        if len(error.shape) > 1:
+            # Если `target_dimentionality` > 1, усредняем ошибку по этой размерности.
+            return (1 / n_observations) * X.T.dot(np.sign(error)) / error.shape[1]
+        else:
+            return (1 / n_observations) * X.T.dot(np.sign(error))
+
