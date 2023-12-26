@@ -38,3 +38,12 @@ class LaplaceDistribution:
         return log_prob
         ####
         
+    def pdf(self, values):
+        '''
+        Returns probability density at every input value.
+        Args:
+            values: A numpy array of shape (n_objects, n_features). Every column represents all available values for the selected feature.
+        '''
+        prob_density = np.exp(self.logpdf(values))
+        return prob_density
+        
