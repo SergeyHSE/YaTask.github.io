@@ -14,3 +14,14 @@ class LaplaceDistribution:
         mad = np.mean(np.abs(x - median), axis=0)
         return mad
         ####
+    def __init__(self, features):
+        '''
+        Args:
+            feature: A numpy array of shape (n_objects, n_features). Every column represents all available values for the selected feature.
+        '''
+        ####
+        # Do not change the class outside of this block
+        self.loc = np.median(features, axis=0)
+        self.scale = np.mean(np.abs(features - self.loc), axis=0)
+        ####
+
