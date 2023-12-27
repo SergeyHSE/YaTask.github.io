@@ -126,3 +126,46 @@ class KNearestNeighbor:
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
+
+    def predict_labels(self, dists, k=1):
+        """
+        Given a matrix of distances between test points and training points,
+        predict a label for each test point.
+
+        Inputs:
+        - dists: A numpy array of shape (num_test, num_train) where dists[i, j]
+          gives the distance betwen the ith test point and the jth training point.
+
+        Returns:
+        - y: A numpy array of shape (num_test,) containing predicted labels for the
+          test data, where y[i] is the predicted label for the test point X[i].
+        """
+        num_test = dists.shape[0]
+        y_pred = np.zeros(num_test)
+        for i in range(num_test):
+            # A list of length k storing the labels of the k nearest neighbors to
+            # the ith test point.
+            #########################################################################
+            # TODO:                                                                 #
+            # Use the distance matrix to find the k nearest neighbors of the ith    #
+            # testing point, and use self.y_train to find the labels of these       #
+            # neighbors. Store these labels in closest_y.                           #
+            # Hint: Look up the function numpy.argsort.                             #
+            #########################################################################
+            # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+            closest_y = self.y_train[np.argsort(dists[i])[:k]]
+            # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+            #########################################################################
+            # TODO:                                                                 #
+            # Now that you have found the labels of the k nearest neighbors, you    #
+            # need to find the most common label in the list closest_y of labels.   #
+            # Store this label in y_pred[i]. Break ties by choosing the smaller     #
+            # label.                                                                #
+            #########################################################################
+            # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+            y_pred[i] = np.argmax(np.bincount(closest_y))
+
+            # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+
+        return y_pred
+
