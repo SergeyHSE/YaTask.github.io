@@ -98,3 +98,31 @@ class KNearestNeighbor:
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
+    def compute_distances_no_loops(self, X):
+        """
+        Compute the distance between each test point in X and each training point
+        in self.X_train using no explicit loops.
+
+        Input / Output: Same as compute_distances_two_loops
+        """
+        num_test = X.shape[0]
+        num_train = self.X_train.shape[0]
+        dists = np.zeros((num_test, num_train))
+        #########################################################################
+        # TODO:                                                                 #
+        # Compute the l2 distance between all test points and all training      #
+        # points without using any explicit loops, and store the result in      #
+        # dists.                                                                #
+        #                                                                       #
+        # You should implement this function using only basic array operations; #
+        # in particular you should not use functions from scipy,                #
+        # nor use np.linalg.norm().                                             #
+        #                                                                       #
+        # HINT: Try to formulate the l2 distance using matrix multiplication    #
+        #       and two broadcast sums.                                         #
+        #########################################################################
+        # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        dists = np.sqrt(np.sum(X**2, axis=1).reshape(-1, 1) + np.sum(self.X_train**2, axis=1) - 2 * X.dot(self.X_train.T))
+        # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        return dists
+
