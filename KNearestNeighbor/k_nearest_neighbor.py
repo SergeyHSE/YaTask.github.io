@@ -76,4 +76,25 @@ class KNearestNeighbor:
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
+    def compute_distances_one_loop(self, X):
+        """
+        Compute the distance between each test point in X and each training point
+        in self.X_train using a single loop over the test data.
+
+        Input / Output: Same as compute_distances_two_loops
+        """
+        num_test = X.shape[0]
+        num_train = self.X_train.shape[0]
+        dists = np.zeros((num_test, num_train))
+        for i in range(num_test):
+            #######################################################################
+            # TODO:                                                               #
+            # Compute the l2 distance between the ith test point and all training #
+            # points, and store the result in dists[i, :].                        #
+            # Do not use np.linalg.norm().                                        #
+            #######################################################################
+            # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+            dists[i, :] = np.sqrt(np.sum((X[i] - self.X_train) ** 2, axis=1))
+            # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        return dists
 
