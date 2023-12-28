@@ -21,3 +21,27 @@ class SimplifiedBaggingRegressor:
             # Your Code Here
             indices = np.random.choice(data_length, data_length, replace=True)
             self.indices_list.append(indices)
+
+    def fit(self, model_constructor, data, target):
+        '''
+        Fit model on every bag.
+        Model constructor with no parameters (and with no ()) is passed to this function.
+
+        example:
+
+        bagging_regressor = SimplifiedBaggingRegressor(num_bags=10, oob=True)
+        bagging_regressor.fit(LinearRegression, X, y)
+        '''
+        self.data = None
+        self.target = None
+        self._generate_splits(data)
+        assert len(set(map(len, self.indices_list))) == 1, 'All bags should be of the same length!'
+        assert list(map(len, self.indices_list))[0] == len(data), 'All bags should contain `len(data)` number of elements!'
+        self.models_list = []
+        for bag in range(self.num_bags):
+            model = model_constructor()
+            data_bag, target_bag = data[self.indices_list[bag]], target[self.indices_list[bag]]
+            self.models_list.append(model.fit(data_bag, target_bag))  # store fitted models here
+        if self.oob:
+            self.data = data
+            self.target = target
