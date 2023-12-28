@@ -69,3 +69,11 @@ class SimplifiedBaggingRegressor:
 
         self.list_of_predictions_lists = np.array(list_of_predictions_lists, dtype=object)
 
+    def _get_averaged_oob_predictions(self):
+        '''
+        Compute average prediction for every object from the training set.
+        If an object has been used in all bags during the training phase, return None instead of prediction
+        '''
+        self._get_oob_predictions_from_every_model()
+        self.oob_predictions = [np.mean(predictions) if len(predictions) > 0 else None for predictions in self.list_of_predictions_lists]
+
