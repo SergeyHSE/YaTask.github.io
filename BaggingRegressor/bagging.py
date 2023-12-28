@@ -56,3 +56,16 @@ class SimplifiedBaggingRegressor:
             predictions += model.predict(data)
         return predictions / self.num_bags
 
+    def _get_oob_predictions_from_every_model(self):
+        '''
+        Generates list of lists, where list i contains predictions for self.data[i] object
+        from all models, which have not seen this object during the training phase
+        '''
+        list_of_predictions_lists = [[] for _ in range(len(self.data))]
+        for i in range(len(self.data)):
+            for j in range(self.num_bags):
+                if i not in self.indices_list[j]:
+                    list_of_predictions_lists[i].append(self.models_list[j].predict([self.data[i]])[0])
+
+        self.list_of_predictions_lists = np.array(list_of_predictions_lists, dtype=object)
+
