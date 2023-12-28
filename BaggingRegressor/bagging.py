@@ -45,3 +45,14 @@ class SimplifiedBaggingRegressor:
         if self.oob:
             self.data = data
             self.target = target
+
+    def predict(self, data):
+        '''
+        Get average prediction for every object from the passed dataset
+        '''
+        # Your Code Here
+        predictions = np.zeros(len(data))
+        for model in self.models_list:
+            predictions += model.predict(data)
+        return predictions / self.num_bags
+
