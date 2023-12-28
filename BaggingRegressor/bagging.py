@@ -77,3 +77,21 @@ class SimplifiedBaggingRegressor:
         self._get_oob_predictions_from_every_model()
         self.oob_predictions = [np.mean(predictions) if len(predictions) > 0 else None for predictions in self.list_of_predictions_lists]
 
+    def OOB_score(self):
+        '''
+        Compute mean square error for all objects, which have at least one prediction
+        '''
+        self._get_averaged_oob_predictions()
+
+        # Check if self.oob_predictions is a list or a 2D array
+        if isinstance(self.oob_predictions, list):
+            valid_indices = [i for i, predictions in enumerate(self.oob_predictions) if predictions is not None]
+            valid_oob_predictions = [self.oob_predictions[i] for i in valid_indices]
+            valid_target = self.target[valid_indices]
+        else:
+            # Filter out objects without any valid predictions
+            valid_indices = np.any(self.oob_predictions is not None, axis=1)
+            valid_oob_predictions = self.oob_predictions[valid_indices]
+            valid_target = self.target[valid_indices]
+
+        return np.mean((valid_oob_predictions - valid_target) ** 2)
