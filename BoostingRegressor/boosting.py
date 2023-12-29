@@ -49,3 +49,8 @@ class SimplifiedBoostingRegressor:
 
         return self
 
+    def predict(self, data):
+        predictions = np.zeros(len(data))
+        for model in self.models_list:
+            predictions += self.lr * model.predict(data)
+        return predictions
